@@ -1,0 +1,133 @@
+import Avatar_1 from '@/components/assets/talent-dashboard/Avatar_1.png'
+import Avatar_2 from '@/components/assets/talent-dashboard/Avatar_2.png'
+import Avatar_3 from '@/components/assets/talent-dashboard/Avatar_3.png'
+import Avatar_4 from '@/components/assets/talent-dashboard/Avatar_4.png'
+
+export const messages = [
+  {
+    id: 1,
+    messageRead: false,
+    image: Avatar_1,
+    userStatus: true,
+    userName: 'Phoenix Baker',
+    userHashTag: '@phoenix',
+    time: '5min ago',
+    message:
+      'Hey Olivia, Katherine sent me over the latest doc. I just have a quick question about the document, i dont have any clue how to read it.',
+  },
+  {
+    id: 2,
+    messageRead: true,
+    image: Avatar_2,
+    userStatus: true,
+    userName: 'Katherine Moss',
+    userHashTag: '@kathy',
+    time: '20min ago',
+    message: "You: Sure thing, I'll have a look today. They're looking great!",
+  },
+  {
+    id: 3,
+    messageRead: false,
+    image: Avatar_3,
+    userStatus: true,
+    userName: 'Mollie Hall',
+    userHashTag: '@mollie',
+    time: '1hr ago',
+    message:
+      "I've just published the site again. Looks like it fixed it. How weird! I’ll keep an eye on it...",
+  },
+  {
+    id: 4,
+    messageRead: true,
+    image: Avatar_4,
+    userStatus: false,
+    userName: 'Rosalee Melvin',
+    userHashTag: '@rosalee',
+    time: '2hr ago',
+    message: 'Hey Liv — just wanted to say thanks for chasing up the release for me. Really...',
+  },
+  {
+    id: 5,
+    messageRead: false,
+    image: Avatar_1,
+    userStatus: true,
+    userName: 'Phoenix Baker',
+    userHashTag: '@phoenix',
+    time: '5min ago',
+    message:
+      'Hey Olivia, Katherine sent me over the latest doc. I just have a quick question about the document, i dont have any clue how to read it.',
+  },
+  {
+    id: 6,
+    messageRead: true,
+    image: Avatar_2,
+    userStatus: true,
+    userName: 'Katherine Moss',
+    userHashTag: '@kathy',
+    time: '20min ago',
+    message: "You: Sure thing, I'll have a look today. They're looking great!",
+  },
+  {
+    id: 7,
+    messageRead: false,
+    image: Avatar_3,
+    userStatus: true,
+    userName: 'Mollie Hall',
+    userHashTag: '@mollie',
+    time: '1hr ago',
+    message:
+      "I've just published the site again. Looks like it fixed it. How weird! I’ll keep an eye on it...",
+  },
+  {
+    id: 8,
+    messageRead: true,
+    image: Avatar_4,
+    userStatus: false,
+    userName: 'Rosalee Melvin',
+    userHashTag: '@rosalee',
+    time: '2hr ago',
+    message: 'Hey Liv — just wanted to say thanks for chasing up the release for me. Really...',
+  },
+  {
+    id: 9,
+    messageRead: false,
+    image: Avatar_1,
+    userStatus: true,
+    userName: 'Phoenix Baker',
+    userHashTag: '@phoenix',
+    time: '5min ago',
+    message:
+      'Hey Olivia, Katherine sent me over the latest doc. I just have a quick question about the document, i dont have any clue how to read it.',
+  },
+  {
+    id: 10,
+    messageRead: true,
+    image: Avatar_2,
+    userStatus: true,
+    userName: 'Katherine Moss',
+    userHashTag: '@kathy',
+    time: '20min ago',
+    message: "You: Sure thing, I'll have a look today. They're looking great!",
+  },
+  {
+    id: 11,
+    messageRead: false,
+    image: Avatar_3,
+    userStatus: true,
+    userName: 'Mollie Hall',
+    userHashTag: '@mollie',
+    time: '1hr ago',
+    message:
+      "I've just published the site again. Looks like it fixed it. How weird! I’ll keep an eye on it...",
+  },
+  {
+    id: 12,
+    messageRead: true,
+    image: Avatar_4,
+    userStatus: false,
+    userName: 'Rosalee Melvin',
+    userHashTag: '@rosalee',
+    time: '2hr ago',
+    message: 'Hey Liv — just wanted to say thanks for chasing up the release for me. Really...',
+  },
+]
