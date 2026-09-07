@@ -423,16 +423,16 @@ export default function UserSelect<FormType extends FieldValues>({
 
   const watchedValue = watch(name)
 
-  const selectedSkills: string[] = useMemo(() => {
-    if (Array.isArray(watchedValue)) {
-      return watchedValue.filter(
-        (item): item is string =>
-          typeof item === 'string',
-      )
-    }
-
+const selectedSkills: string[] = useMemo(() => {
+  if (!Array.isArray(watchedValue)) {
     return []
-  }, [watchedValue])
+  }
+
+  return (watchedValue as unknown[]).filter(
+    (item: unknown): item is string =>
+      typeof item === 'string',
+  )
+}, [watchedValue])
 
   /*
   |--------------------------------------------------------------------------
