@@ -128,10 +128,10 @@ export const editProfileApi = {
           formData.append('profilePicture', profilePicture)
         }
       }
-      return await apiRequest('/update-talent', {
-        method: 'POST',
-        body: formData,
-      })
+      return await apiRequest('/add-talent', {
+  method: 'POST',
+  body: formData,
+})
     } catch (error) {
       console.error('Error updating talent:', error)
       throw error
