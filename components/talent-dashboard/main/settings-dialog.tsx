@@ -113,13 +113,15 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
   async function onSubmit(data: ProfileFormValues) {
     try {
       setIsLoading(true)
-      await userApi.updateProfile({
-        firstName: data.firstName,
-        middleName: data.middleName || '',
-        lastName: data.lastName,
-        email: data.email,
-        profilePicture: data.profilePicture || null,
-      })
+    
+await userApi.updateProfile(profile._id, {
+  firstName: data.firstName,
+  middleName: data.middleName || '',
+  lastName: data.lastName,
+  email: data.email,
+  profilePicture: data.profilePicture || null,
+})
+
       toast(PROFILE_MESSAGES.UPDATE.SUCCESS)
       await refreshProfile()
       onOpenChange(false)

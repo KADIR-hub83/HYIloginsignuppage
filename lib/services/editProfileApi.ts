@@ -41,102 +41,124 @@ export const editProfileApi = {
       throw error
     }
   },
-  updateTalent: async (
-    data:
-      | FormData
-      | {
-          userName?: string
-          profileSummary?: string
-          country?: string
-          city?: string
-          profilePicture?: File | string
-          resume?: File
-          [key: string]: any
-          technicalSkills?: {
-            skill: string
-            experience: string
-          }[]
-          otherSkills?: string[]
-          languages?: {
-            language: string
-            proficiency: string
-          }[]
-          experience?: {
-            companyName: string
-            designation: string
-            workSince: string
-            workTill: string
-            currentlyWorking: boolean
-            description: string
-          }[]
-          projects?: {
-            projectTitle?: string
-            year?: string
-            projectLink?: string
-            technicalSkillUsed?: string[]
-            projectDescription?: string
-          }[]
-          education?: {
-            university?: string
-            degree?: string
-            specialization?: string
-            passingOutYear?: string
-          }[]
-          certification?: {
-            title?: string
-            issuedBy?: string
-            issuedDate?: string
-            uploadCertificate?: File |string | null
-            website?: string
-          }[]
-          files?: File[]
-          preference?: {
-            employmentPreference?: string
-            hoursPerWeek?: string
-            desiredSalary?: {
-              currency?: string
-              price?: string
-            }
-            availableHours?: {
-              from?: string
-              to?: string
-            }
+  
+
+updateTalent: async (
+  data:
+    | FormData
+    | {
+        userName?: string
+        profileSummary?: string
+        country?: string
+        city?: string
+        profilePicture?: File | string
+        resume?: File
+        [key: string]: any
+        technicalSkills?: {
+          skill: string
+          experience: string
+        }[]
+        otherSkills?: string[]
+        languages?: {
+          language: string
+          proficiency: string
+        }[]
+        experience?: {
+          companyName: string
+          designation: string
+          workSince: string
+          workTill: string
+          currentlyWorking: boolean
+          description: string
+        }[]
+        projects?: {
+          projectTitle?: string
+          year?: string
+          projectLink?: string
+          technicalSkillUsed?: string[]
+          projectDescription?: string
+        }[]
+        education?: {
+          university?: string
+          degree?: string
+          specialization?: string
+          passingOutYear?: string
+        }[]
+        certification?: {
+          title?: string
+          issuedBy?: string
+          issuedDate?: string
+          uploadCertificate?: File | string | null
+          website?: string
+        }[]
+        files?: File[]
+        preference?: {
+          employmentPreference?: string
+          hoursPerWeek?: string
+          desiredSalary?: {
+            currency?: string
+            price?: string
           }
-          typeOfJob?: string
-          github?: string
-          linkedin?: string
-          portfolio?: string
-          userType?: string
-          phoneNumber?: string
+          availableHours?: {
+            from?: string
+            to?: string
+          }
         }
-  ) => {
-    try {
-      let formData: FormData
-      if (data instanceof FormData) {
-        formData = data
-      } else {
-        formData = new FormData()
-        const {profilePicture, resume, files, ...otherData } = data
-        formData.append('data', JSON.stringify(otherData))
-        if (files && files.length > 0) {
-          files.forEach(file => formData.append('uploadCertificate', file))
-        }
-        if (resume) {
-          formData.append('resume', resume)
-        }
-        if (profilePicture) {
-          formData.append('profilePicture', profilePicture)
-        }
+        typeOfJob?: string
+        github?: string
+        linkedin?: string
+        portfolio?: string
+        userType?: string
+        phoneNumber?: string
       }
-      return await apiRequest('/add-talent', {
-  method: 'POST',
-  body: formData,
-})
-    } catch (error) {
-      console.error('Error updating talent:', error)
-      throw error
+) => {
+  try {
+    const formData =
+      data instanceof FormData ? data : new FormData()
+
+    if (!(data instanceof FormData)) {
+      const {
+        profilePicture,
+        resume,
+        files,
+        ...otherData
+      } = data
+
+      formData.append('data', JSON.stringify(otherData))
+
+      if (files?.length) {
+        files.forEach(file => {
+          formData.append('uploadCertificate', file)
+        })
+      }
+
+      if (resume instanceof File) {
+        formData.append('resume', resume)
+      }
+
+      if (profilePicture instanceof File) {
+        formData.append('profilePicture', profilePicture)
+      }
     }
-  },
+
+    return await apiRequest('/add-talent', {
+      method: 'POST',
+      body: formData,
+    })
+  } catch (error) {
+    console.error('Error updating talent:', error)
+    throw error
+  }
+},
+
+
+
+
+
+
+
+
+
   getLanguages: async (query = '') => {
     try {
       return await apiRequest(`/get-languages${query}`)

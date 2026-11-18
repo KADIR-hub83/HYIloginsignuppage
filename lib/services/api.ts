@@ -947,73 +947,96 @@ getTalentDashboardData: async (token: string) => {
     }
   },
 
-  updateProfile: async (data: {
+
+updateProfile: async (
+  userId: string,
+  data: {
     firstName: string
     middleName: string
     lastName: string
     email: string
     profilePicture: string | File | null
-  }) => {
-    try {
-      const formData = new FormData()
+  }
+) => {
+  try {
+    if (!userId) {
+      throw new Error('User ID is missing. Please login again.')
+    }
 
-      formData.append('firstName', data.firstName)
-      formData.append('middleName', data.middleName)
-      formData.append('lastName', data.lastName)
-      formData.append('email', data.email)
+    const formData = new FormData()
 
-      // Append profileImage if it exists
-      if (data.profilePicture) {
-        formData.append('profilePicture', data.profilePicture)
-      } else {
-        formData.append('removeProfilePicture', 'true')
-      }
+    formData.append('firstName', data.firstName)
+    formData.append('middleName', data.middleName || '')
+    formData.append('lastName', data.lastName)
+    formData.append('email', data.email)
 
-      return await apiRequest('/update-user-data', {
+    // Upload a new profile picture only when a File is selected.
+    if (data.profilePicture instanceof File) {
+      formData.append('profilePicture', data.profilePicture)
+    } else if (data.profilePicture === null) {
+      formData.append('removeProfilePicture', 'true')
+    }
+
+    return await apiRequest(`/update-user/${encodeURIComponent(userId)}`, {
+      method: 'POST',
+      body: formData,
+    })
+  } catch (error) {
+    console.error('Profile update error:', error)
+    throw error
+  }
+},
+
+
+
+uploadAvatar: async (userId: string, file: File | null) => {
+  try {
+    if (!userId) {
+      throw new Error('User ID is missing. Please login again.')
+    }
+
+    const formData = new FormData()
+
+    if (file instanceof File) {
+      formData.append('profilePicture', file)
+    } else {
+      formData.append('removeProfilePicture', 'true')
+    }
+
+    return await apiRequest(
+      `/update-user/${encodeURIComponent(userId)}`,
+      {
         method: 'POST',
         body: formData,
-      })
-    } catch (error) {
-      console.error('Profile update error:', error)
-      throw error
-    }
-  },
-
-  uploadAvatar: async (file: File | null) => {
-    try {
-      const formData = new FormData()
-      if (file instanceof File) {
-        formData.append('profilePicture', file)
-      } else {
-        formData.append('profilePicture', '')
       }
+    )
+  } catch (error) {
+    console.error('Avatar upload error:', error)
+    throw error
+  }
+},
 
-      // // Debugging output
-      // const formObject: Record<string, any> = {}
-      // formData.forEach((value, key) => {
-      //   formObject[key] = value
-      // })
-      // console.log(formObject)
 
-      return await apiRequest('/update-user-data', {
+
+deleteAvatar: async (userId: string) => {
+  try {
+    if (!userId) {
+      throw new Error('User ID is missing. Please login again.')
+    }
+
+    const formData = new FormData()
+    formData.append('removeProfilePicture', 'true')
+
+    return await apiRequest(
+      `/update-user/${encodeURIComponent(userId)}`,
+      {
         method: 'POST',
         body: formData,
-      })
-    } catch (error) {
-      console.error('Avatar upload error:', error)
-      throw error
-    }
-  },
-
-  deleteAvatar: async () => {
-    try {
-      return await apiRequest('/update-user-data', {
-        method: 'POST',
-        body: JSON.stringify({ profilePicture: '' }),
-      })
-    } catch (error) {
-      console.error('Avatar deletion error:', error)
-      throw error
-    }
-  },
+      }
+    )
+  } catch (error) {
+    console.error('Avatar deletion error:', error)
+    throw error
+  }
+},
 }
