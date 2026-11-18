@@ -110,31 +110,40 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
     }
   }
 
-  async function onSubmit(data: ProfileFormValues) {
-    try {
-      setIsLoading(true)
-    
-await userApi.updateProfile(profile._id, {
-  firstName: data.firstName,
-  middleName: data.middleName || '',
-  lastName: data.lastName,
-  email: data.email,
-  profilePicture: data.profilePicture || null,
-})
-
-      toast(PROFILE_MESSAGES.UPDATE.SUCCESS)
-      await refreshProfile()
-      onOpenChange(false)
-    } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        ...PROFILE_MESSAGES.UPDATE.ERROR,
-        description: error.message || PROFILE_MESSAGES.UPDATE.ERROR.description,
-      })
-    } finally {
-      setIsLoading(false)
-    }
+async function onSubmit(data: ProfileFormValues) {
+  if (!profile?._id) {
+    toast({
+      variant: 'destructive',
+      title: 'Profile not found',
+      description: 'Please refresh the page and try again.',
+    })
+    return
   }
+
+  try {
+    setIsLoading(true)
+
+    await userApi.updateProfile(profile._id, {
+      firstName: data.firstName,
+      middleName: data.middleName || '',
+      lastName: data.lastName,
+      email: data.email,
+      profilePicture: data.profilePicture || null,
+    })
+
+    toast(PROFILE_MESSAGES.UPDATE.SUCCESS)
+    await refreshProfile()
+    onOpenChange(false)
+  } catch (error: any) {
+    toast({
+      variant: 'destructive',
+      ...PROFILE_MESSAGES.UPDATE.ERROR,
+      description: error.message || PROFILE_MESSAGES.UPDATE.ERROR.description,
+    })
+  } finally {
+    setIsLoading(false)
+  }
+}
 
   const handleClose = () => {
     form.reset()
